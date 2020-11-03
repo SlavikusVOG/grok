@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GrokV2</title>
+    <!--Webix files-->
+    <link rel="stylesheet" href="http://cdn.webix.com/edge/webix.css" type="text/css" charset="utf-8">
+    <script src="http://cdn.webix.com/edge/webix.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../data/menu_data.js" type="text/javascript" charset="utf-8"></script>
+    <!--<script src="../data/db.js" type="text/javascript" charset="utf-8"></script>-->
+    <!--<script src="clientapp.js" type="text/javascript" charset="utf-8"></script>-->
+</head>
+<body>
+<script src="clientapp.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+    webix.ready(function (){
+        webix.ui({
+            cols:[
+                main_sidebar,
+                main_multiview
+            ]
+        });
+        $$("list_of_Records").sync($$("datasetA_datatable"));
+    });
+</script>
+</body>
+</html>
