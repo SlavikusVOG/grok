@@ -1,5 +1,5 @@
 const groupsdata = (app, fs) =>{
-    const dataPath = './data/groups.json';
+    const dataPath = '../data/groups.json';
     const urlPath = '/groups';
     const controller = require('../data/controller')
 

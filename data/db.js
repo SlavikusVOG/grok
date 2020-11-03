@@ -100,7 +100,7 @@ module.exports = {
             },
             {
                 id: 6,
-                group: 1,
+                groupId: 1,
                 groupMemberName: "Artist6",
                 roleInTheGroup: "Role6",
                 dateOfBirth: "01.01.1970",
@@ -111,7 +111,10 @@ module.exports = {
 
 //#endregion database
         let fs = require("fs");
-
+        const fileGroupsName = "../data/groups.json";
+        const fileArtistsName = "../data/artists.json";
+        const fileAlbumsName = "../data/albums.json";
+        const fileSongsName = "../data/songs.json";
         /*
         let groupsDataPath = "data/groups.json";
         let artistsDataPath = "data/artists.json";
@@ -137,22 +140,26 @@ module.exports = {
 
          */
         //try to find data file for groups data
-        let fname = "../data/groups.json";
-        /*
+
         try {
             //if file exists, do nothing, else create new file
-            if(fs.existsSync(fname)){
-                console.log(`${fname} exists`);
+            if(fs.existsSync(fileGroupsName)){
+                console.log(`${fileGroupsName} exists`);
             } else{
-                fs.writeFile("data/groups.json", JSON.stringify(groupsData),function(writeFileErr, result){
-                    if(writeFileErr) console.log('error', writeFileErr);
+                fs.writeFile(fileGroupsName, JSON.stringify(groupsData),(writeFileErr)=>{
+                    if(writeFileErr) {
+                        console.error('error', writeFileErr);
+                    }else{
+                        console.log(`${fileGroupsName} created`)
+                    }
                 });
             }
         } catch (err) {
             console.log(err);
         }
 
-         */
+
+        /*
         fs.readFile(fname, function(err){
             if(err){
                 fs.writeFile(fname, JSON.stringify(groupsData),function(writeFileErr, result){
@@ -162,44 +169,68 @@ module.exports = {
             }
             console.log(`${fname} exists`)
         })
-        //try to find data file for groups data
-        fname = "../data/artists.json"
+
+         */
+        /*
+        let groups_count;
+        fs.readFile(fileGroupsName, 'utf8', (err, data)=>{
+            if(err){
+                return console.error(`Read file ${fileGroupsName} error: ${err.message}`);
+            }else{
+                groups_count = JSON.parse(data).length;
+            }
+        });
+        */
+
+
         try {
             //if file exists, do nothing, else create new file
-            if(fs.existsSync(fname)){
-                console.log(`${fname} exists`);
+            if(fs.existsSync(fileArtistsName)){
+                console.log(`${fileArtistsName} exists`);
             } else{
-                const Artists = artistsData;
-                let groupLength;
+                /*
                 fs.readFile(fname,function(err, data){
                     if(err){
-                        return console.error(`Ошибка при чтении файла `)
+                        return console.error(`Read file ${fname} error: ${err.message}`)
                     }
                 })
-                for(let i = 6; i < 200000; i++){
-                    Artists.push({
-                        id: i,
-                        groupId: 1,
-                        groupMemberName: `Artist${i}`,
-                        roleInTheGroup:`Role${i}`,
-                        dateOfBirth: "01.01.1970",
-                        countryOfBirth: `Country${i}`,
-                        awards: `Awards${i}`
-                    })
-                }
-                fs.writeFile(fname, JSON.stringify(Artists), function(writeFileErr, result){
-                    if(writeFileErr) {
-                        console.log('error', writeFileErr);
+
+                 */
+
+                fs.readFile(fileGroupsName, 'utf8', (err, data)=>{
+                    if(err){
+                        return console.error(`Read file ${fileGroupsName} error: ${err.message}`);
+                    }else{
+                        const Artists = artistsData;
+                        let groups_count;
+                        groups_count = JSON.parse(data).length;
+                        for(let i = 7; i < 200000; i++){
+                            Artists.push({
+                                id: i,
+                                groupId: grok_random.getRandomArbitrary(1, groups_count),
+                                groupMemberName: `Artist${i}`,
+                                roleInTheGroup:`Role${i}`,
+                                dateOfBirth: "01.01.1970",
+                                countryOfBirth: `Country${i}`,
+                                awards: `Awards${i}`
+                            })
+                        }
+                        fs.writeFile(fileArtistsName, JSON.stringify(Artists), function(writeFileErr){
+                            if(writeFileErr) {
+                                console.log(`Write file ${fileArtistsName} error: ${writeFileErr.message}`);
+                            }
+                        });
                     }
                 });
+
             }
         } catch(err){
             console.log(err);
         }
-        fname = "../data/albums.json"
+
         try{
-            if(fs.existsSync(fname)){
-                console.log(`${fname} exists`);
+            if(fs.existsSync(fileAlbumsName)){
+                console.log(`${fileAlbumsName} exists`);
             } else{
                 const Albums = [{
                     id:1
@@ -209,21 +240,39 @@ module.exports = {
                     ,number_of_issued_copies: 10000
                     ,removal_basket: 10
                 }];
-
-                for(let i = 2; i < 100; i++){
-                    Albums.push({
-                        id:i
-                        ,release_date: "01.01.1970"
-                        ,number_of_songs: grok_random.getRandomArbitrary(1,30)
-                        ,number_of_issued_copies: grok_random.getRandomArbitrary(100, 1000000)
-                        ,removal_basket: grok_random.getRandomInt(10)
-                    })
-                }
-                fs.writeFile(fname, JSON.stringify(Albums), function(writeFileErr, result){
-                    if(writeFileErr){
-                        console.log('error', writeFileErr);
+                /*
+                let groups_count;
+                fs.readFile(fileGroupsName, (err, data)=>{
+                    if(err){
+                        return console.error(`Read file ${fileGroupsName} error: ${err.message}`);
                     }
+                    groups_count = parseInt(JSON.parse(data).length);
                 })
+
+                 */
+                let groups_count;
+                fs.readFile(fileGroupsName, 'utf8', (err, data)=>{
+                    if(err){
+                        return console.error(`Read file ${fileGroupsName} error: ${err.message}`);
+                    }else{
+                        groups_count = JSON.parse(data).length;
+                        for(let i = 2; i < 100; i++){
+                            Albums.push({
+                                id:i
+                                ,groupId: grok_random.getRandomArbitrary(1, groups_count)
+                                ,release_date: "01.01.1970"
+                                ,number_of_songs: grok_random.getRandomArbitrary(1,30)
+                                ,number_of_issued_copies: grok_random.getRandomArbitrary(100, 1000000)
+                                ,removal_basket: grok_random.getRandomInt(10)
+                            })
+                        }
+                        fs.writeFile(fileAlbumsName, JSON.stringify(Albums), function(writeFileErr, result){
+                            if(writeFileErr){
+                                console.log('error', writeFileErr);
+                            }
+                        })
+                    }
+                });
             }
         }catch(err){
             console.log(err);
