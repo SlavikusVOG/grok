@@ -1,3 +1,4 @@
+/*
 let clientgroupsData = [
     {
         id: 1,
@@ -48,6 +49,8 @@ let clientgroupsData = [
         countryOfFoundation: "Country6"
     }
 ];
+
+ */
 
 let main_sidebar={
     id:"main_sidebar",
@@ -104,8 +107,13 @@ let datasetA_datatable = {
 
         on: {
         onAfterSelect: function (selection, preserve) {
+            /*
             let updatedata = $$("datasetA_datatable").getItem(selection.id);
             $$("editdata_form").setValues(updatedata);
+            datasetA_popup.show();
+
+             */
+            $$("editdata_form").bind($$("datasetA_datatable"));
             datasetA_popup.show();
         }
     },
@@ -152,12 +160,13 @@ let datasetB_view = {
             view:"datatable",
             columns:[
                 {id:"groupMemberName", header: "Group member name", editor:"text"},
-                {id:"roleInTheGroup", header: "Role in the group", editor:"text"},
+                {id:"roleInTheGroup", header: "Role in the group", width:150, editor:"text"},
                 {id:"dateOfBirth", header: "Date of birth", editor:"text"},
                 {id:"countryOfBirth", header: "Counrty of birth", editor:"text"},
                 {id:"awards", header: "Awards", editor:"text"}
             ],
-            select:"row", editable:true,
+            select:"row",
+            editable:true,
             scroll:"y",
             datafetch:50,//default
             loadahead:100,
@@ -166,8 +175,12 @@ let datasetB_view = {
     ]
 };
 
-let list_of_Records = {
-    id: "list_of_Records",
+let albumsData = new webix.DataCollection({
+    url:"http://localhost:3000/albums"
+})
+
+let list_of_records = {
+    id: "list_of_records",
     view: "list",
     //data:clientgroupsData,
     template: "Group: #groupName#",
@@ -181,42 +194,100 @@ let list_of_Records = {
         },
         */
 
-        /*
-        onAfterSelect: function (id) {
 
+        onAfterSelect: function (id) {
+            /*
+            $$("list_of_records_datatable").attachEvent("onBeforeLoad", function(id){
+                this.filter(function(data){
+                    return data.groupId === id;
+                });
+            });
+
+             */
+
+            $$("list_of_records_datatable").data.sync(albumsData, function(){
+                $$("list_of_records_datatable").filter(function(data){
+                    return data.groupId == id;
+                });
+            });
+
+
+            //$$("list_of_records_datatable").bind($$("list_of_records"));
         }
-         */
     }
 };
 
-let list_of_Records_Datatable = {
-    id:"list_of_Records_Datatable",
+let songsdata = new webix.DataCollection({
+    url:"http://localhost:3000/songs"
+})
+
+let list_of_records_datatable = {
+    id:"list_of_records_datatable",
     view:"datatable",
     columns:[
-        {id:"album", header:"Album"},
+        {id:"album_name", header:"Album"},
         {id:"release_date", header:"Release date", editor:"text"},
-        {id:"number_of_songs", header:"Number of songs", editor:"text"},
-        {id:"number_of_issued_copies", header:"Number of issued copies", editor:"text"},
-        {id:"removal_basket", header:"Removal basket", editor:"text"}
+        {id:"number_of_songs", header:"Number of songs", editor:"text", fillspace: true},
+        {id:"number_of_issued_copies", header:"Number of issued copies", editor:"text", fillspace: true},
+        {id:"removal_basket", header:"Removal basket", editor:"text", fillspace: true}
     ],
-    editable:true
+    editable:true,
+    on:{
+        onAfterSelect: function(id){
+            $$("")
+        }
+    }
+}
+
+let list_of_records_template_data = [
+    {
+        src: "imgs/image001.jpg"
+        ,group_name:"Group from datasetA_datatable"
+        ,album_title: "album_name from list_of_records_datatable"
+        ,song:"title of songs"
+        ,awards:"awards from datasetA_datatable"
+    }
+]
+
+
+
+let list_of_records_template ={
+    id:"list_of_records_template"
+    ,view:"template"
+    ,template:"album photo, group name, album title, title of each song, awards"
 }
 
 let listOfRecordsView={
     id:"listOfRecordsView",
     view:"layout",
     rows:[
-        list_of_Records
+        list_of_records
+        ,list_of_records_datatable
     ]
+}
+
+let settings_view={
+    id:"settings_view"
+    ,cols:[
+        {
+            template:"col1"
+        }
+        ,{
+            template:"col2"
+        }
+    ]
+
+
 }
 
 let main_multiview={
     id:"main_multiview",
     view:"multiview",
     cells:[
-        datasetA_view,
-        datasetB_view,
-        listOfRecordsView
+        datasetA_view
+        ,datasetB_view
+        ,listOfRecordsView
+        ,settings_view
     ]
 };
 

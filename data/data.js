@@ -1,6 +1,7 @@
-const groupsdata = require('./groupsdata');
-const artistsdata = require('./artistsdata');
-const albumsdata = require('./albumsdata');
+const groupsdata = require('../data/groupsdata');
+const artistsdata = require('../data/artistsdata');
+const albumsdata = require('../data/albumsdata');
+const songsdata = require('../data/songsdata')
 
 
 const appData = (app, fs) => {
@@ -10,6 +11,7 @@ const appData = (app, fs) => {
     groupsdata(app,fs);
     artistsdata(app,fs);
     albumsdata(app,fs)
+    songsdata(app,fs);
 };
 
 module.exports = appData;

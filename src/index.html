@@ -13,6 +13,7 @@
 <body>
 <script src="clientapp.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" charset="utf-8">
+
     webix.ready(function (){
         webix.ui({
             cols:[
@@ -20,7 +21,7 @@
                 main_multiview
             ]
         });
-        $$("list_of_Records").sync($$("datasetA_datatable"));
+        $$("list_of_records").sync($$("datasetA_datatable"));
     });
 </script>
 </body>
