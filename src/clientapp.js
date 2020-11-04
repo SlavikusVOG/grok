@@ -1,57 +1,3 @@
-/*
-let clientgroupsData = [
-    {
-        id: 1,
-        groupName: "group1",
-        musicStyle: "style1",
-        composition: "composition1",
-        groupCreationDate: "01.01.1970",
-        countryOfFoundation: "Country1"
-    },
-    {
-        id: 2,
-        groupName: "group2",
-        musicStyle: "style2",
-        composition: "composition2",
-        groupCreationDate: "01.01.1970",
-        countryOfFoundation: "Country2"
-    },
-    {
-        id: 3,
-        groupName: "group3",
-        musicStyle: "style3",
-        composition: "composition3",
-        groupCreationDate: "01.01.1970",
-        countryOfFoundation: "Country3"
-    },
-    {
-        id: 4,
-        groupName: "group4",
-        musicStyle: "style4",
-        composition: "composition4",
-        groupCreationDate: "01.01.1970",
-        countryOfFoundation: "Country4"
-    },
-    {
-        id: 5,
-        groupName: "group5",
-        musicStyle: "style5",
-        composition: "composition5",
-        groupCreationDate: "01.01.1970",
-        countryOfFoundation: "Country5"
-    },
-    {
-        id: 6,
-        groupName: "group6",
-        musicStyle: "style6",
-        composition: "composition6",
-        groupCreationDate: "01.01.1970",
-        countryOfFoundation: "Country6"
-    }
-];
-
- */
-
 let main_sidebar={
     id:"main_sidebar",
     view:"sidebar",
@@ -182,7 +128,6 @@ let albumsData = new webix.DataCollection({
 let list_of_records = {
     id: "list_of_records",
     view: "list",
-    //data:clientgroupsData,
     template: "Group: #groupName#",
     select: true,
     on: {
@@ -219,11 +164,47 @@ let list_of_records = {
 
 let songsdata = new webix.DataCollection({
     url:"http://localhost:3000/songs"
-})
+});
+
+let list_of_records_template_data = [
+    {
+        /*
+        img_src: "img_src from Album"
+        ,group_name:"Group from datasetA_datatable"
+        ,album_title: "album_name from list_of_records_datatable"
+        ,song:"title of songs"
+        ,awards:"awards from datasetA_datatable"
+         */
+    }
+];
+
+
+let list_of_records_template = {
+    id:"list_of_records_template"
+    ,view:"template"
+    //,template:"album photo, group name, album title, title of each song, awards"
+    ,data: list_of_records_template_data
+    ,template:function(data){
+        return '<p><img src ="' + data.img_src + '"/>, '
+            + data.group_name + ', '
+            + data.album_title + ', '
+            + data.song + ', '
+            + data.awards
+            +'</p>';
+    }
+}
+
+let list_of_records_template_popup = webix.ui({
+    view:"popup",
+    id:"list_of_records_template_popup",
+    head:false,
+    body:webix.copy(list_of_records_template)
+});
 
 let list_of_records_datatable = {
     id:"list_of_records_datatable",
     view:"datatable",
+    select:"row",
     columns:[
         {id:"album_name", header:"Album"},
         {id:"release_date", header:"Release date", editor:"text"},
@@ -234,28 +215,15 @@ let list_of_records_datatable = {
     editable:true,
     on:{
         onAfterSelect: function(id){
-            $$("")
+            $$("list_of_records_datatable").bind(songsdata, (slave, master)=>{
+                if(!master) return false;
+                return master.id == slave.albumId;
+            });
+            $$("list_of_records_template").sync($$("list_of_records_datatable"));
+            list_of_records_template_popup.show();
         }
     }
-}
-
-let list_of_records_template_data = [
-    {
-        src: "imgs/image001.jpg"
-        ,group_name:"Group from datasetA_datatable"
-        ,album_title: "album_name from list_of_records_datatable"
-        ,song:"title of songs"
-        ,awards:"awards from datasetA_datatable"
-    }
-]
-
-
-
-let list_of_records_template ={
-    id:"list_of_records_template"
-    ,view:"template"
-    ,template:"album photo, group name, album title, title of each song, awards"
-}
+};
 
 let listOfRecordsView={
     id:"listOfRecordsView",
@@ -264,7 +232,7 @@ let listOfRecordsView={
         list_of_records
         ,list_of_records_datatable
     ]
-}
+};
 
 let settings_view={
     id:"settings_view"
