@@ -149,14 +149,11 @@ let list_of_records = {
             });
 
              */
-
             $$("list_of_records_datatable").data.sync(albumsData, function(){
                 $$("list_of_records_datatable").filter(function(data){
                     return data.groupId == id;
                 });
             });
-
-
             //$$("list_of_records_datatable").bind($$("list_of_records"));
         }
     }
@@ -178,13 +175,17 @@ let list_of_records_template_data = [
     }
 ];
 
+let templateData = new webix.DataCollection({
+    url:"http://localhost:3000/template"
+})
 
 let list_of_records_template = {
     id:"list_of_records_template"
     ,view:"template"
     //,template:"album photo, group name, album title, title of each song, awards"
-    ,data: list_of_records_template_data
-    ,template:function(data){
+    //,data: list_of_records_template_data
+    /*
+    ,template: function(data){
         return '<p><img src ="' + data.img_src + '"/>, '
             + data.group_name + ', '
             + data.album_title + ', '
@@ -192,7 +193,20 @@ let list_of_records_template = {
             + data.awards
             +'</p>';
     }
+     */
+    ,template:"<div>Album photo: #album_img_src#</div>"
+        + "<div>Group name: #groupName#</div>"
+        + "<div>Album title: #album_title#</div>"
+        + "<div>Title of each song: #song_names#</div>"
+        + "<div>Awards: #awards#</div>"
+    ,on:{
+
+    }
+    //,src:"http://localhost:3000/template"
+
 }
+
+
 
 let list_of_records_template_popup = webix.ui({
     view:"popup",
@@ -200,6 +214,8 @@ let list_of_records_template_popup = webix.ui({
     head:false,
     body:webix.copy(list_of_records_template)
 });
+
+
 
 let list_of_records_datatable = {
     id:"list_of_records_datatable",
@@ -214,12 +230,15 @@ let list_of_records_datatable = {
     ],
     editable:true,
     on:{
-        onAfterSelect: function(id){
-            $$("list_of_records_datatable").bind(songsdata, (slave, master)=>{
-                if(!master) return false;
-                return master.id == slave.albumId;
-            });
-            $$("list_of_records_template").sync($$("list_of_records_datatable"));
+        onAfterSelect: function(selection, preserve){
+            //$$("list_of_records_template").load("http://localhost:3000/template");
+            $$("list_of_records_template").data = templateData.getItem(selection.id)
+            //webix.alert(templateData.data.getItem(selection.id));
+            /*
+            let updatedata = $$("datasetA_datatable").getItem(selection.id);
+            $$("editdata_form").setValues(updatedata);
+            datasetA_popup.show();
+             */
             list_of_records_template_popup.show();
         }
     }

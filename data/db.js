@@ -7,7 +7,7 @@ module.exports = {
                 groupName: "group1",
                 musicStyle: "style1",
                 composition: "composition1",
-                groupCreationDate: "01.01.1970",
+                groupCreationDate: new Date(1970, 1,1),
                 countryOfFoundation: "Country1"
             },
             {
@@ -15,7 +15,7 @@ module.exports = {
                 groupName: "group2",
                 musicStyle: "style2",
                 composition: "composition2",
-                groupCreationDate: "01.01.1970",
+                groupCreationDate: new Date(1970, 1,1),
                 countryOfFoundation: "Country2"
             },
             {
@@ -23,7 +23,7 @@ module.exports = {
                 groupName: "group3",
                 musicStyle: "style3",
                 composition: "composition3",
-                groupCreationDate: "01.01.1970",
+                groupCreationDate: new Date(1970, 1,1),
                 countryOfFoundation: "Country3"
             },
             {
@@ -31,7 +31,7 @@ module.exports = {
                 groupName: "group4",
                 musicStyle: "style4",
                 composition: "composition4",
-                groupCreationDate: "01.01.1970",
+                groupCreationDate: new Date(1970, 1,1),
                 countryOfFoundation: "Country4"
             },
             {
@@ -39,7 +39,7 @@ module.exports = {
                 groupName: "group5",
                 musicStyle: "style5",
                 composition: "composition5",
-                groupCreationDate: "01.01.1970",
+                groupCreationDate: new Date(1970, 1,1),
                 countryOfFoundation: "Country5"
             },
             {
@@ -47,7 +47,7 @@ module.exports = {
                 groupName: "group6",
                 musicStyle: "style6",
                 composition: "composition6",
-                groupCreationDate: "01.01.1970",
+                groupCreationDate: new Date(1970, 1,1),
                 countryOfFoundation: "Country6"
             }
         ];
@@ -58,7 +58,7 @@ module.exports = {
                 groupId: 1,
                 groupMemberName: "Artist1",
                 roleInTheGroup: "Role1",
-                dateOfBirth: "01.01.1970",
+                dateOfBirth: new Date(1970, 1,1),
                 countryOfBirth: "Country1",
                 awards: "Awards1"
             },
@@ -67,7 +67,7 @@ module.exports = {
                 groupId: 1,
                 groupMemberName: "Artist2",
                 roleInTheGroup: "Role2",
-                dateOfBirth: "01.01.1970",
+                dateOfBirth: new Date(1970, 1,1),
                 countryOfBirth: "Country2",
                 awards: "Awards2"
             },
@@ -76,7 +76,7 @@ module.exports = {
                 groupId: 1,
                 groupMemberName: "Artist3",
                 roleInTheGroup: "Role3",
-                dateOfBirth: "01.01.1970",
+                dateOfBirth: new Date(1970, 1,1),
                 countryOfBirth: "Country3",
                 awards: "Awards3"
             },
@@ -85,7 +85,7 @@ module.exports = {
                 groupId: 1,
                 groupMemberName: "Artist4",
                 roleInTheGroup: "Role4",
-                dateOfBirth: "01.01.1970",
+                dateOfBirth: new Date(1970, 1,1),
                 countryOfBirth: "Country4",
                 awards: "Awards4"
             },
@@ -94,7 +94,7 @@ module.exports = {
                 groupId: 1,
                 groupMemberName: "Artist5",
                 roleInTheGroup: "Role5",
-                dateOfBirth: "01.01.1970",
+                dateOfBirth: new Date(1970, 1,1),
                 countryOfBirth: "Country5",
                 awards: "Awards5"
             },
@@ -103,7 +103,7 @@ module.exports = {
                 groupId: 1,
                 groupMemberName: "Artist6",
                 roleInTheGroup: "Role6",
-                dateOfBirth: "01.01.1970",
+                dateOfBirth: new Date(1970, 1,1),
                 countryOfBirth: "Country6",
                 awards: "Awards6"
             },
@@ -139,7 +139,6 @@ module.exports = {
         })
 
          */
-        //try to find data file for groups data
 
         try {
             //if file exists, do nothing, else create new file
@@ -174,13 +173,13 @@ module.exports = {
                         const Artists = artistsData;
                         let groups_count;
                         groups_count = JSON.parse(data).length;
-                        for(let i = 7; i < 200000; i++){
+                        for(let i = 7; i < 200; i++){
                             Artists.push({
                                 id: i,
                                 groupId: grok_random.getRandomArbitrary(1, groups_count),
                                 groupMemberName: `Artist${i}`,
                                 roleInTheGroup:`Role${i}`,
-                                dateOfBirth: "01.01.1970",
+                                dateOfBirth: new Date(1970, 1,1),
                                 countryOfBirth: `Country${i}`,
                                 awards: `Awards${i}`
                             })
@@ -203,7 +202,7 @@ module.exports = {
                     id:1
                     ,album_name:"Album1"
                     ,groupId: 1
-                    ,release_date: "01.01.1970"
+                    ,release_date: new Date(1970, 1,1)
                     ,number_of_songs: 10
                     ,number_of_issued_copies: 10000
                     ,removal_basket: 10
@@ -231,11 +230,11 @@ module.exports = {
                                 id:i
                                 ,album_name:`Album${i}`
                                 ,groupId: grok_random.getRandomArbitrary(1, groups_count)
-                                ,release_date: "01.01.1970"
+                                ,release_date: new Date(1970, 1,1)
                                 ,number_of_songs: grok_random.getRandomArbitrary(1,30)
                                 ,number_of_issued_copies: grok_random.getRandomArbitrary(100, 1000000)
                                 ,removal_basket: grok_random.getRandomInt(10)
-                                ,img_src:`imgs/imge${zeroPad(i,4)}`
+                                ,img_src:`imgs/img${zeroPad(i,4)}`
                             })
                         }
                         fs.writeFile(fileAlbumsName, JSON.stringify(Albums), function(writeFileErr){

@@ -1,7 +1,7 @@
 const albumsdata = (app, fs)=>{
     const dataPath = '../data/albums.json';
     const urlPath = '/albums';
-    const controller = require('../data/controller');
+    const controller = require('../controllers/dbcontroller');
 
     controller(app, fs, dataPath, urlPath);
 

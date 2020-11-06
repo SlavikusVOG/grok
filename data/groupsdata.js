@@ -1,7 +1,7 @@
 const groupsdata = (app, fs) =>{
     const dataPath = '../data/groups.json';
     const urlPath = '/groups';
-    const controller = require('../data/controller')
+    const controller = require('../controllers/dbcontroller')
 
     controller(app, fs, dataPath, urlPath);
     /*

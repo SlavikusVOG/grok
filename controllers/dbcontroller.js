@@ -1,4 +1,4 @@
-const controller = (app, fs, dataPath, urlPath)=>{
+const dbcontroller = (app, fs, dataPath, urlPath)=>{
     const readFile = (
         callback,
         returnJson = false,
@@ -70,4 +70,4 @@ const controller = (app, fs, dataPath, urlPath)=>{
     });
 };
 
-module.exports = controller
+module.exports = dbcontroller

@@ -1,7 +1,7 @@
 const artistsdata = (app, fs) =>{
     const dataPath = '../data/artists.json';
     const urlPath = '/artists';
-    const controller = require('../data/controller')
+    const controller = require('../controllers/dbcontroller')
 
     controller(app, fs, dataPath, urlPath);
     /*
