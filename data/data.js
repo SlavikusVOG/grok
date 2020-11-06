@@ -14,7 +14,7 @@ const appData = (app, fs) => {
     albumsdata(app,fs)
     songsdata(app,fs);
     listOfRecordsData(app,fs);
-    serverUpload(app)
+    serverUpload(app, fs);
 };
 
 module.exports = appData;

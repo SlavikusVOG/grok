@@ -253,6 +253,14 @@ let listOfRecordsView={
     ]
 };
 
+let settings_form ={
+    view:"form"
+    ,id:"settings_form"
+    ,elements:[
+        {view:"text", name:"groupName", label:"Group"}
+    ]
+}
+
 let settings_view={
     id:"settings_view"
     ,view:"form"
@@ -261,8 +269,9 @@ let settings_view={
             rows:[
                 {
                     view:"uploader"
-                    ,id: "uploader_1"
+                    ,id: "fileuploader"
                     ,value:"Upload file"
+                    , name:"files"
                     ,link:"mylist"
                     ,upload:"http://localhost:3000/upload"
                     //,datatype:"json"
@@ -273,19 +282,25 @@ let settings_view={
                     ,type:"uploader"
                 },
                 {
-                    view: "button"
-                    ,label: "Get value"
-                    ,click: function(){
-                        let text = this.getParentView().getValues();
+                    view:"button"
+                    , label: "Get value"
+                    , click: function(){
+                        let text = this.getParentView().getParentView().getValues();
                         text = JSON.stringify(text, "\n");
-                        webix.message("<pre>" + text + "</pre>");
+                        webix.message("<pre>"+text+"</pre>")
                     }
                 }
             ]
 
         },
         {
-            template:"col2"
+            rows:[
+                {
+                    //body:webix.copy(datasetA_datatable),
+                    id:"settings_datatable"
+                },
+                settings_form
+            ]
         }
     ]
 }
