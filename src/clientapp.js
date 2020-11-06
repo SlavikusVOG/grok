@@ -255,16 +255,39 @@ let listOfRecordsView={
 
 let settings_view={
     id:"settings_view"
+    ,view:"form"
     ,cols:[
         {
-            template:"col1"
-        }
-        ,{
+            rows:[
+                {
+                    view:"uploader"
+                    ,id: "uploader_1"
+                    ,value:"Upload file"
+                    ,link:"mylist"
+                    ,upload:"http://localhost:3000/upload"
+                    //,datatype:"json"
+                },
+                {
+                    view:"list"
+                    ,id:"mylist"
+                    ,type:"uploader"
+                },
+                {
+                    view: "button"
+                    ,label: "Get value"
+                    ,click: function(){
+                        let text = this.getParentView().getValues();
+                        text = JSON.stringify(text, "\n");
+                        webix.message("<pre>" + text + "</pre>");
+                    }
+                }
+            ]
+
+        },
+        {
             template:"col2"
         }
     ]
-
-
 }
 
 let main_multiview={
