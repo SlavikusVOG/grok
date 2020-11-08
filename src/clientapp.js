@@ -1,3 +1,4 @@
+//main_sidebar - view for display menu
 let main_sidebar={
     id:"main_sidebar",
     view:"sidebar",
@@ -11,7 +12,7 @@ let main_sidebar={
         }
     }
 };
-
+//editdata_form - form for editing data from datasetA_datatable
 let editdata_form = {
     view:"form",
     id:"editdata_form",
@@ -29,14 +30,14 @@ let editdata_form = {
         }
     }
 };
-
+//datasetA_popup - display editdata_form with data which user select on datasetA_datatable
 let datasetA_popup = webix.ui({
     view:"popup",
     id:"datasetA_popup",
     head:false,
     body:webix.copy(editdata_form)
 });
-
+//datasetA_datatable - display dataset with information about groups
 let datasetA_datatable = {
     id:"datasetA_datatable",
         view:"datatable",
@@ -52,21 +53,22 @@ let datasetA_datatable = {
         url:"http://localhost:3000/groups",
 
         on: {
-        onAfterSelect: function (selection, preserve) {
-            /*
-            let updatedata = $$("datasetA_datatable").getItem(selection.id);
-            $$("editdata_form").setValues(updatedata);
-            datasetA_popup.show();
+            //after select row display form with data for edit
+            onAfterSelect: function (selection, preserve) {
 
-             */
-            $$("editdata_form").bind($$("datasetA_datatable"));
-            datasetA_popup.show();
-        }
+                /*
+                let updatedata = $$("datasetA_datatable").getItem(selection.id);
+                $$("editdata_form").setValues(updatedata);
+                datasetA_popup.show();
+
+                 */
+                $$("editdata_form").bind($$("datasetA_datatable"));
+                datasetA_popup.show();
+            }
     },
-
     save:"rest->http://localhost:3000/groups"
 }
-
+// datasetA_view - consist of toolbar with export and refresh buttons and datatable with information about groups
 let datasetA_view={
     id:"datasetA_view",
     view: "layout",
@@ -96,7 +98,7 @@ let datasetA_view={
         datasetA_datatable
     ]
 };
-
+//datasetB_view - consist of editing datatable with data about artists
 let datasetB_view = {
     id:"datasetB_view",
     view:"layout",
@@ -120,7 +122,7 @@ let datasetB_view = {
         }
     ]
 };
-
+//albumsData - datacollection with albums data
 let albumsData = new webix.DataCollection({
     url:"http://localhost:3000/albums"
 })
@@ -159,22 +161,25 @@ let list_of_records = {
     }
 };
 
+/*
 let songsdata = new webix.DataCollection({
     url:"http://localhost:3000/songs"
 });
+*/
 
+/*
 let list_of_records_template_data = [
     {
-        /*
+
         img_src: "img_src from Album"
         ,group_name:"Group from datasetA_datatable"
         ,album_title: "album_name from list_of_records_datatable"
         ,song:"title of songs"
         ,awards:"awards from datasetA_datatable"
-         */
+
     }
 ];
-
+*/
 let templateData = new webix.DataCollection({
     url:"http://localhost:3000/template"
 })
