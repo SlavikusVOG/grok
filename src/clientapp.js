@@ -264,6 +264,12 @@ let settings_form ={
 let settings_view={
     id:"settings_view"
     ,view:"form"
+    ,rows:[
+        {
+            view:"toolbar"
+            ,elements
+        }
+    ]
     ,cols:[
         {
             rows:[
