@@ -266,54 +266,107 @@ let settings_form ={
     ]
 }
 
+let fileUploader = {
+    view:"uploader"
+    ,id: "fileUploader"
+    ,value:"Upload file"
+    , name:"files"
+    ,link:"mylist"
+    ,upload:"http://localhost:3000/upload"
+    //,datatype:"json"
+}
+
+let myList = {
+    view:"list"
+    ,id:"myList"
+    ,type:"uploader"
+}
+
+let getValueButton = {
+    view:"button"
+    ,id:"getValueButton"
+    , label: "Get value"
+    , click: function(){
+        let text = this.getParentView().getParentView().getValues();
+        text = JSON.stringify(text, "\n");
+        webix.message("<pre>"+text+"</pre>")
+    }
+}
+settings_view_elements = [
+    {
+        view: "checkbox"
+        , id: "settings_view_switch_checkbox"
+        , labelRight: "Switch controls"
+        , value: 0
+    }
+]
+
+
+
+let settings_view_toolbar = {
+    view:"toolbar"
+    ,id:"settings_view_toolbar"
+    ,elements:settings_view_elements
+    ,elementsConfig:{
+    on:{
+        onChange:function(){
+            if(this.getValue() == 1){
+                $$("fileUploader").hide();
+                $$("myList").hide();
+                $$("getValueButton").hide();
+                $$("settings_view_datatable").show();
+                $$("settings_form").show();
+            }
+            if(this.getValue() == 0){
+                $$("fileUploader").show();
+                $$("myList").show();
+                $$("getValueButton").show();
+                $$("settings_view_datatable").hide();
+                $$("settings_form").hide()
+            }
+            $$("settings_view").refresh();
+        }
+    }
+    }
+}
+
+let settings_view_datatable = {
+    view:"datatable"
+    ,id:"settings_view_datatable"
+    ,columns:[
+        {id: "groupName", header: ["Group name", {content:"textFilter"}], fillspace: true, sort:"string"},
+        {id: "musicStyle", header: ["Music style", {content:"textFilter"}], fillspace: true, sort:"string"},
+        {id: "composition", header: ["Compositions", {content:"textFilter"}], fillspace: true, sort:"string"},
+        {id: "groupCreationDate", header: ["Group creation date", {content:"textFilter"}], fillspace: true, sort:"date"},
+        {id: "countryOfFoundation", header: ["Country of foundation", {content:"textFilter"}], fillspace: true, sort:"string"}
+    ]
+}
+
 let settings_view={
     id:"settings_view"
     ,view:"form"
     ,rows:[
+        settings_view_toolbar,
         {
-            view:"toolbar"
-            ,elements
-        }
-    ]
-    ,cols:[
-        {
-            rows:[
+            cols:[
                 {
-                    view:"uploader"
-                    ,id: "fileuploader"
-                    ,value:"Upload file"
-                    , name:"files"
-                    ,link:"mylist"
-                    ,upload:"http://localhost:3000/upload"
-                    //,datatype:"json"
+                    rows:[
+                        fileUploader
+                        ,myList
+                        ,getValueButton
+                    ]
                 },
                 {
-                    view:"list"
-                    ,id:"mylist"
-                    ,type:"uploader"
-                },
-                {
-                    view:"button"
-                    , label: "Get value"
-                    , click: function(){
-                        let text = this.getParentView().getParentView().getValues();
-                        text = JSON.stringify(text, "\n");
-                        webix.message("<pre>"+text+"</pre>")
-                    }
+
+                    rows:[
+                        settings_view_datatable
+                        ,settings_form
+                    ]
                 }
             ]
-
-        },
-        {
-            rows:[
-                {
-                    //body:webix.copy(datasetA_datatable),
-                    id:"settings_datatable"
-                },
-                settings_form
-            ]
         }
     ]
+
 }
 
 let main_multiview={
@@ -332,3 +385,9 @@ function setDatasetA(){
     $$("datasetA_datatable").updateItem(updatedData.id, updatedData);
     $$("datasetA_popup").hide();
 }
+/*
+function syncdatasetA_datatable(viewId){
+    $$(viewId).data.sync($$("datasetA_datatable"),()=>{});
+}
+
+ */
