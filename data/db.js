@@ -1,7 +1,8 @@
 module.exports = {
     initdatafile: function (grok_random) {
-        //#region database
-        let groupsData = [
+
+        //#region old database (not used)
+        /*let groupsData = [
             {
                 id: 1,
                 groupName: "group1",
@@ -108,13 +109,88 @@ module.exports = {
                 awards: "Awards6"
             },
         ];
+        */
 
-//#endregion database
+//#endregion old database (not used)
+
+        //#region generate data
+
+        let groupsData = new Array();
+        for(let groupIndex = 1; groupIndex < 11; groupIndex++){
+            groupsData[groupIndex] = new Object();
+            groupsData[groupIndex].id = groupIndex;
+            groupsData[groupIndex].groupName = `group${groupIndex}`;
+            groupsData[groupIndex].musicStile = `style${groupIndex}`;
+            groupsData[groupIndex].composition = `compositions${groupIndex}`;
+            groupsData[groupIndex].groupCreationDate = createDate();
+            groupsData[groupIndex].countryOfFoundation = `Country${groupIndex}`;
+            groupsData[groupIndex].artists = createArtistsArray();
+            groupsData[groupIndex].albums = new Array();
+
+        }
+        const createArtistsArray = function(groupId){
+            let artists = new Array();
+            for(let artistIndex = 1; artistIndex <= grok_random.getRandomInt(10); artistIndex++){
+                artists[artistIndex] = new Object();
+                artists[artistIndex].id = artistIndex;
+                artists[artistIndex].groupId = groupId;
+                artists[artistIndex].roleInTheGroup = `Role${artistIndex}`;
+                artists[artistIndex].groupMemberName = `Artist${groupIndex}_${artistIndex}`;
+                artists[artistIndex].dateOfBirth = createDate();
+                artists[artistIndex].countryOfBirth = `Country${artistIndex}`;
+            }
+            return artists;
+        }
+
+        const createSongs = function(albumId){
+            let songs = new Array();
+            for(let songIndex = 1; songIndex <= grok_random.getRandomInt(30); songIndex++){
+                songs[songIndex].id = songIndex;
+                songs[songIndex].song_name = `Song${songIndex}`;
+                songs[songIndex].albumId = albumId;
+            }
+            return songs;
+        }
+
+        const createAlbums = function(groupIndex){
+            let albums = new Array();
+            for(let albumIndex = 1; albumIndex <= grok_random.getRandomInt(20); albumIndex++){
+                albums[albumIndex] = new Object();
+                albums[albumIndex].id = albumIndex;
+                albums[albumIndex].groupId = groupIndex;
+                albums[albumIndex].release_date = createDate();
+                albums[albumIndex].songs = createSongs(albumIndex);
+                albums[albumIndex].number_of_songs = albums[albumIndex].songs.length;
+                albums[albumIndex].number_of_issued_copies = grok_random.getRandomArbitrary(1000, 10000000);
+                albums[albumIndex].removal_backet = grok_random.getRandomInt(10);
+                albums[albumIndex].ims_src = `imgs/img${zeroPad(albumIndex, 4)}`;
+            }
+            return albums;
+        }
+
+        const createDate = function(){
+            return new Date(1970, 1,1);
+        }
+        //endregion generate data
+
+        //#region input data into files
         let fs = require("fs");
         const fileGroupsName = "../data/groups.json";
         const fileArtistsName = "../data/artists.json";
         const fileAlbumsName = "../data/albums.json";
         const fileSongsName = "../data/songs.json";
+        const data = "../data/data.json"
+
+        try{
+            if(fs.existsSync(fileGroupsName)){
+                console.log(`${fileGroupsName} exists`)
+            }
+        }catch(err){
+            throw err;
+        }
+        //#endregion input data into files
+
+        //#region old check for db files existence
         /*
         let groupsDataPath = "data/groups.json";
         let artistsDataPath = "data/artists.json";
@@ -139,6 +215,7 @@ module.exports = {
         })
 
          */
+        //#endregion old check for db files existence
 
         try {
             //if file exists, do nothing, else create new file
@@ -157,6 +234,8 @@ module.exports = {
             if(fs.existsSync(fileArtistsName)){
                 console.log(`${fileArtistsName} exists`);
             } else{
+
+                //#region old check for data file existence (not used)
                 /*
                 fs.readFile(fname,function(err, data){
                     if(err){
@@ -165,6 +244,7 @@ module.exports = {
                 })
 
                  */
+                //#endregion old check for data file existence (not used)
 
                 fs.readFile(fileGroupsName, 'utf8', (err, data)=>{
                     if(err){
@@ -208,6 +288,8 @@ module.exports = {
                     ,removal_basket: 10
                     ,img_src:"imgs/image001"
                 }];
+
+                //#region groups count (not used)
                 /*
                 let groups_count;
                 fs.readFile(fileGroupsName, (err, data)=>{
@@ -216,8 +298,8 @@ module.exports = {
                     }
                     groups_count = parseInt(JSON.parse(data).length);
                 })
-
                  */
+                //#endregion groups count (not used)
 
                 fs.readFile(fileGroupsName, 'utf8', (err, data)=>{
                     if(err){
@@ -286,7 +368,7 @@ module.exports = {
             console.log(err);
         }
 
-
+        //#region old function for checking db (not used)
         /*
         fs.readFile(fname, function(err){
             if(err){
@@ -430,6 +512,7 @@ module.exports = {
         }
 
          */
+        //#endregion old function for checking db (not used)
     }
 }
 
