@@ -72,7 +72,7 @@ let datasetA_datatable = {
     save:"rest->http://localhost:3000/maindata"
 }
 
-datasetA_toolbar = {
+let datasetA_toolbar = {
     id:"datasetA_toolbar",
     view:"toolbar",
     elements:[
@@ -105,28 +105,30 @@ let datasetA_view={
     ]
 };
 
+datasetB_datatable = {
+    id:"datasetB_datatable",
+    view:"datatable",
+    columns:[
+        {id:"groupMemberName", header: "Group member name", editor:"text"},
+        {id:"roleInTheGroup", header: "Role in the group", width:150, editor:"text"},
+        {id:"dateOfBirth", header: "Date of birth", editor:"date"},
+        {id:"countryOfBirth", header: "Counrty of birth", editor:"text"},
+        {id:"awards", header: "Awards", editor:"text"}
+    ],
+    select:"row",
+    editable:true,
+    scroll:"y",
+    datafetch:50,//default
+    loadahead:100,
+    url:"http://localhost:3000/artists",
+}
+
 //datasetB_view - consist of editing datatable with data about artists
 let datasetB_view = {
     id:"datasetB_view",
     view:"layout",
     rows:[
-        {
-            id:"datasetB_datatable",
-            view:"datatable",
-            columns:[
-                {id:"groupMemberName", header: "Group member name", editor:"text"},
-                {id:"roleInTheGroup", header: "Role in the group", width:150, editor:"text"},
-                {id:"dateOfBirth", header: "Date of birth", editor:"date"},
-                {id:"countryOfBirth", header: "Counrty of birth", editor:"text"},
-                {id:"awards", header: "Awards", editor:"text"}
-            ],
-            select:"row",
-            editable:true,
-            scroll:"y",
-            datafetch:50,//default
-            loadahead:100,
-            url:"http://localhost:3000/artists",
-        }
+        datasetB_datatable
     ]
 };
 
@@ -188,10 +190,11 @@ let list_of_records_template_data = [
     }
 ];
 */
-
+/*
 let templateData = new webix.DataCollection({
     url:"http://localhost:3000/template"
 })
+ */
 
 let list_of_records_template = {
     id:"list_of_records_template"
