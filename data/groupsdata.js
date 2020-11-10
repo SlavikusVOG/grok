@@ -4,6 +4,8 @@ const groupsdata = (app, fs) =>{
     const controller = require('../controllers/dbcontroller')
 
     controller(app, fs, dataPath, urlPath);
+
+    //#region methods for working with groupsdata (not used)
     /*
     //readfile - function to take data from json file
     const readFile = (
@@ -78,6 +80,7 @@ const groupsdata = (app, fs) =>{
     });
 
      */
+    //#endregion methods for working with groupsdata (not used)
 };
 
 module.exports = groupsdata;

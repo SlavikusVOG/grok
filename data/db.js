@@ -115,36 +115,27 @@ module.exports = {
 
         //#region generate data
 
+        const zeroPad = (num, places) => String(num).padStart(places, '0')
         let groupsData = new Array();
-        for(let groupIndex = 1; groupIndex < 11; groupIndex++){
-            groupsData[groupIndex] = new Object();
-            groupsData[groupIndex].id = groupIndex;
-            groupsData[groupIndex].groupName = `group${groupIndex}`;
-            groupsData[groupIndex].musicStile = `style${groupIndex}`;
-            groupsData[groupIndex].composition = `compositions${groupIndex}`;
-            groupsData[groupIndex].groupCreationDate = createDate();
-            groupsData[groupIndex].countryOfFoundation = `Country${groupIndex}`;
-            groupsData[groupIndex].artists = createArtistsArray();
-            groupsData[groupIndex].albums = new Array();
-
-        }
-        const createArtistsArray = function(groupId){
+        let createArtistsArray = function(groupId){
             let artists = new Array();
-            for(let artistIndex = 1; artistIndex <= grok_random.getRandomInt(10); artistIndex++){
+            for(let artistIndex = 0; artistIndex <= grok_random.getRandomInt(10); artistIndex++){
                 artists[artistIndex] = new Object();
                 artists[artistIndex].id = artistIndex;
                 artists[artistIndex].groupId = groupId;
                 artists[artistIndex].roleInTheGroup = `Role${artistIndex}`;
-                artists[artistIndex].groupMemberName = `Artist${groupIndex}_${artistIndex}`;
+                artists[artistIndex].groupMemberName = `Artist${groupId}_${artistIndex}`;
                 artists[artistIndex].dateOfBirth = createDate();
                 artists[artistIndex].countryOfBirth = `Country${artistIndex}`;
+                artists[artistIndex].awards = `Awards${artistIndex}`
             }
             return artists;
         }
 
-        const createSongs = function(albumId){
+        let createSongs = function(albumId){
             let songs = new Array();
-            for(let songIndex = 1; songIndex <= grok_random.getRandomInt(30); songIndex++){
+            for(let songIndex = 0; songIndex < grok_random.getRandomInt(30); songIndex++){
+                songs[songIndex] = new Object();
                 songs[songIndex].id = songIndex;
                 songs[songIndex].song_name = `Song${songIndex}`;
                 songs[songIndex].albumId = albumId;
@@ -152,9 +143,9 @@ module.exports = {
             return songs;
         }
 
-        const createAlbums = function(groupIndex){
+        let createAlbums = function(groupIndex){
             let albums = new Array();
-            for(let albumIndex = 1; albumIndex <= grok_random.getRandomInt(20); albumIndex++){
+            for(let albumIndex = 0; albumIndex < grok_random.getRandomInt(20); albumIndex++){
                 albums[albumIndex] = new Object();
                 albums[albumIndex].id = albumIndex;
                 albums[albumIndex].groupId = groupIndex;
@@ -168,9 +159,23 @@ module.exports = {
             return albums;
         }
 
-        const createDate = function(){
-            return new Date(1970, 1,1);
+        let createDate = function(){
+            let date = new Date(1970, 1,1);
+            date.setHours(0, 0, 0, 0);
+            return date;
         }
+        for(let groupIndex = 0; groupIndex < 10; groupIndex++){
+            groupsData[groupIndex] = new Object();
+            groupsData[groupIndex].id = groupIndex;
+            groupsData[groupIndex].groupName = `group${groupIndex}`;
+            groupsData[groupIndex].musicStyle = `style${groupIndex}`;
+            groupsData[groupIndex].composition = `compositions${groupIndex}`;
+            groupsData[groupIndex].groupCreationDate = createDate();
+            groupsData[groupIndex].countryOfFoundation = `Country${groupIndex}`;
+            groupsData[groupIndex].artists = createArtistsArray(groupIndex);
+            groupsData[groupIndex].albums = createAlbums(groupIndex);
+        }
+
         //endregion generate data
 
         //#region input data into files
@@ -179,11 +184,13 @@ module.exports = {
         const fileArtistsName = "../data/artists.json";
         const fileAlbumsName = "../data/albums.json";
         const fileSongsName = "../data/songs.json";
-        const data = "../data/data.json"
+        const dataFile = "../data/data.json"
 
         try{
-            if(fs.existsSync(fileGroupsName)){
-                console.log(`${fileGroupsName} exists`)
+            if(fs.existsSync(dataFile)){
+                console.log(`${dataFile} exists`)
+            }else{
+                fs.writeFileSync(dataFile,JSON.stringify(groupsData));
             }
         }catch(err){
             throw err;

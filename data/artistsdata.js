@@ -4,6 +4,8 @@ const artistsdata = (app, fs) =>{
     const controller = require('../controllers/dbcontroller')
 
     controller(app, fs, dataPath, urlPath);
+
+    //#region old methods for working with artistsdata
     /*
     //read data from file
     const readFile = (
@@ -82,7 +84,7 @@ const artistsdata = (app, fs) =>{
 
      */
 
-    //
+    //#endregion old methods for working with artistsdata
 };
 
 module.exports = artistsdata;
