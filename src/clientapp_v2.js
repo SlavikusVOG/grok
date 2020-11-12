@@ -323,18 +323,22 @@ let settings_view_toolbar = {
     on:{
         onChange:function(){
             if(this.getValue() == 1){
-                $$("fileUploader").hide();
-                $$("myList").hide();
-                $$("getValueButton").hide();
-                $$("settings_view_datatable").show();
-                $$("settings_form").show();
+                $$("settings_view_col1").hide();
+                $$("settings_view_col2").show();
+                //$$("fileUploader").hide();
+                //$$("myList").hide();
+                //$$("getValueButton").hide();
+                //$$("settings_view_datatable").show();
+                //$$("settings_form").show();
             }
             if(this.getValue() == 0){
-                $$("fileUploader").show();
-                $$("myList").show();
-                $$("getValueButton").show();
-                $$("settings_view_datatable").hide();
-                $$("settings_form").hide()
+                $$("settings_view_col1").show();
+                $$("settings_view_col2").hide();
+                //$$("fileUploader").hide();
+                //$$("myList").hide();
+                //$$("getValueButton").hide();
+                //$$("settings_view_datatable").show();
+                //$$("settings_form").show();
             }
             $$("settings_view").refresh();
         }
@@ -362,6 +366,7 @@ let settings_view={
         {
             cols:[
                 {
+                    id:"settings_view_col1",
                     rows:[
                         fileUploader
                         ,myList
@@ -369,7 +374,7 @@ let settings_view={
                     ]
                 },
                 {
-
+                    id:"settings_view_col2",
                     rows:[
                         settings_view_datatable
                         ,settings_form
@@ -378,7 +383,6 @@ let settings_view={
             ]
         }
     ]
-
 }
 
 let main_multiview={
