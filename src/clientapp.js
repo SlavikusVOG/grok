@@ -182,7 +182,7 @@ let list_of_records_template_data = [
 */
 let templateData = new webix.DataCollection({
     url:"http://localhost:3000/template"
-})
+});
 
 let list_of_records_template = {
     id:"list_of_records_template"
