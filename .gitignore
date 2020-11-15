@@ -118,3 +118,8 @@ dist
 
 # End of https://www.toptal.com/developers/gitignore/api/node
 /.idea/workspace.xml
+/data/albums.json
+/data/artists.json
+/data/data.json
+/data/groups.json
+/data/songs.json
