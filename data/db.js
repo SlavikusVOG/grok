@@ -116,7 +116,7 @@ module.exports = {
         //#region generate data
 
         const zeroPad = (num, places) => String(num).padStart(places, '0')
-        let groupsData = new Array();
+
         let createArtistsArray = function(groupId){
             let artists = new Array();
             for(let artistIndex = 0; artistIndex <= grok_random.getRandomInt(10); artistIndex++){
@@ -149,6 +149,7 @@ module.exports = {
                 albums[albumIndex] = new Object();
                 albums[albumIndex].id = albumIndex;
                 albums[albumIndex].groupId = groupIndex;
+                albums[albumIndex].album = `Album${groupIndex}_${albumIndex}`
                 albums[albumIndex].release_date = createDate();
                 albums[albumIndex].songs = createSongs(albumIndex);
                 albums[albumIndex].number_of_songs = albums[albumIndex].songs.length;
@@ -164,6 +165,8 @@ module.exports = {
             date.setHours(0, 0, 0, 0);
             return date;
         }
+
+        let groupsData = new Array();
         for(let groupIndex = 0; groupIndex < 10; groupIndex++){
             groupsData[groupIndex] = new Object();
             groupsData[groupIndex].id = groupIndex;
@@ -178,14 +181,9 @@ module.exports = {
 
         //endregion generate data
 
-        //#region input data into files
+        //#region input data into data/data.json
         let fs = require("fs");
-        const fileGroupsName = "../data/groups.json";
-        const fileArtistsName = "../data/artists.json";
-        const fileAlbumsName = "../data/albums.json";
-        const fileSongsName = "../data/songs.json";
         const dataFile = "../data/data.json"
-
         try{
             if(fs.existsSync(dataFile)){
                 console.log(`${dataFile} exists`)
@@ -196,6 +194,11 @@ module.exports = {
             throw err;
         }
         //#endregion input data into files
+
+        const fileGroupsName = "../data/groups.json";
+        const fileArtistsName = "../data/artists.json";
+        const fileAlbumsName = "../data/albums.json";
+        const fileSongsName = "../data/songs.json";
 
         //#region old check for db files existence
         /*
@@ -224,23 +227,34 @@ module.exports = {
          */
         //#endregion old check for db files existence
 
+        //#region input data into datafiles
         try {
+            let data = new Array();
+            let clearData = function(data){
+                return data = [];
+            }
+
+            data = clearData(data);
             //if file exists, do nothing, else create new file
             if(fs.existsSync(fileGroupsName)){
                 console.log(`${fileGroupsName} exists`);
             } else{
-                fs.writeFile(fileGroupsName, JSON.stringify(groupsData),(writeFileErr)=>{
-                    if(writeFileErr) {
-                        console.error('error', writeFileErr);
-                    }else{
-                        console.log(`${fileGroupsName} created`)
-                    }
-                });
+                for(let index = 0; index < groupsData.length; index++){
+                    data.push(groupsData[index]);
+                }
+                fs.writeFileSync(fileGroupsName, JSON.stringify(data));
             }
 
+            data = clearData(data);
             if(fs.existsSync(fileArtistsName)){
                 console.log(`${fileArtistsName} exists`);
             } else{
+                for(let groupIndex = 0; groupIndex < groupsData.length; groupIndex++){
+                    for(let artistIndex = 0; artistIndex < groupsData[groupIndex].artists.length; artistIndex++){
+                        data.push(groupsData[groupIndex].artists[artistIndex]);
+                    }
+                }
+                fs.writeFileSync(fileArtistsName, JSON.stringify(data));
 
                 //#region old check for data file existence (not used)
                 /*
@@ -253,6 +267,7 @@ module.exports = {
                  */
                 //#endregion old check for data file existence (not used)
 
+                /*
                 fs.readFile(fileGroupsName, 'utf8', (err, data)=>{
                     if(err){
                         return console.error(`Read file ${fileGroupsName} error: ${err.message}`);
@@ -280,11 +295,22 @@ module.exports = {
                         });
                     }
                 });
+
+                 */
             }
 
+            data = clearData(data);
             if(fs.existsSync(fileAlbumsName)){
                 console.log(`${fileAlbumsName} exists`);
             } else{
+                for(let groupIndex = 0; groupIndex < groupsData.length; groupIndex++){
+                    for(let albumIndex = 0; albumIndex < groupsData[groupIndex].albums.length; albumIndex++){
+                        data.push(groupsData[groupIndex].albums[albumIndex]);
+                    }
+                }
+                fs.writeFileSync(fileAlbumsName, JSON.stringify(data));
+
+                /*
                 const Albums = [{
                     id:1
                     ,album_name:"Album1"
@@ -295,6 +321,8 @@ module.exports = {
                     ,removal_basket: 10
                     ,img_src:"imgs/image001"
                 }];
+
+                 */
 
                 //#region groups count (not used)
                 /*
@@ -307,7 +335,7 @@ module.exports = {
                 })
                  */
                 //#endregion groups count (not used)
-
+                /*
                 fs.readFile(fileGroupsName, 'utf8', (err, data)=>{
                     if(err){
                         return console.error(`Read file ${fileGroupsName} error: ${err.message}`);
@@ -336,17 +364,32 @@ module.exports = {
                         });
                     }
                 });
+
+                 */
             }
 
+            data = clearData(data);
             if(fs.existsSync(fileSongsName)){
                 console.log(`${fileSongsName} exists`);
             }else{
+                /*
                 const Songs = [{
                     id:1
                     ,song_name:"Song1"
                     ,albumId:1
                 }]
+                */
 
+                for(let groupIndex = 0; groupIndex < groupsData.length; groupIndex++){
+                    for(let albumIndex = 0; albumIndex < groupsData[groupIndex].albums.length; albumIndex++){
+                        for(let songIndex = 0; songIndex < groupsData[groupIndex].albums[albumIndex].songs.length; songIndex++){
+                            data.push(groupsData[groupIndex].albums[albumIndex].songs[songIndex]);
+                        }
+                    }
+                }
+
+                fs.writeFileSync(fileSongsName, JSON.stringify(data));
+                /*
                 fs.readFile(fileAlbumsName, 'utf8', (err, albumsData)=>{
                     if(err){
                         return console.error(`Read file ${fileGroupsName} error: ${err.message}`);
@@ -369,6 +412,8 @@ module.exports = {
                         });
                     }
                 });
+
+                 */
             }
 
         } catch (err) {
