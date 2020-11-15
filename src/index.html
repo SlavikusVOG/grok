@@ -11,24 +11,12 @@
     <!--<script src="clientapp.js" type="text/javascript" charset="utf-8"></script>-->
 </head>
 <body>
-<script src="datasetA.js"></script>
-<script src="datasetB.js"></script>
-<script src="listOfRecords.js"></script>
-<script src="settings.js"></script>
-<script src="menu.js"></script>
-<script src="multiView.js" type="text/javascript" charset="utf-8"></script>
-<script type="text/javascript" charset="utf-8">
-
-    webix.ready(function (){
-        webix.ui({
-            cols:[
-                Menu.main_sidebar,
-                MultiView.main_multiview
-            ]
-        }).show();
-        $$("list_of_records").sync($$("datasetA_datatable"));
-        $$("settings_view_datatable").sync($$("datasetA_datatable"));
-    });
-</script>
+<script src="../public/datasetA.js"></script>
+<script src="../public/datasetB.js"></script>
+<script src="../public/listOfRecords.js"></script>
+<script src="../public/settings.js"></script>
+<script src="../public/menu.js"></script>
+<script src="../public/multiView.js"></script>
+<script src="../public/clientapp.js"></script>
 </body>
 </html>
