@@ -7,9 +7,6 @@ const listOfRecordsData = require('../data/listOfRecordsData');
 const serverUpload = require('../controllers/serverUpload');
 
 const appData = (app, fs) => {
-    app.get('/', (req, res) =>{
-        res.send('api-server');
-    });
     groupsData(app,fs);
     artistsData(app,fs);
     albumsData(app,fs)
