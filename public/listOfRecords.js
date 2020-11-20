@@ -88,25 +88,28 @@ ListOfRecords.template = {
     }
     //,src:"http://localhost:3000/template"
 
-}
+};
 
-
-
-ListOfRecords.popup = webix.ui({
+ListOfRecords.popup = {
     view:"popup",
     id:"list_of_records_template_popup",
     head:false,
     body:webix.copy(ListOfRecords.template)
-});
+};
 
-
+/*ListOfRecords.popup = webix.ui({
+    view:"popup",
+    id:"list_of_records_template_popup",
+    head:false,
+    body:webix.copy(ListOfRecords.template)
+});*/
 
 ListOfRecords.datatable = {
     id:"list_of_records_datatable",
     view:"datatable",
     select:"row",
     columns:[
-        {id:"album_name", header:"Album"},
+        {id:"album_title", header:"Album"},
         {id:"release_date", header:"Release date", editor:"text"},
         {id:"number_of_songs", header:"Number of songs", editor:"text", fillspace: true},
         {id:"number_of_issued_copies", header:"Number of issued copies", editor:"text", fillspace: true},

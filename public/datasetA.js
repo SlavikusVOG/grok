@@ -20,12 +20,12 @@ DatasetA.editdata_form = {
 };
 
 //popup - display editdata_form with data which user select on datasetA_datatable
-DatasetA.popup = webix.ui({
+DatasetA.popup = {
     view:"popup",
     id:"datasetA_popup",
     head:false,
     body:webix.copy(DatasetA.editdata_form)
-});
+};
 
 //datasetA_datatable - display dataset with information about groups
 DatasetA.datatable = {
@@ -37,7 +37,7 @@ DatasetA.datatable = {
         {id: "groupName", header: ["Group name", {content:"textFilter"}], fillspace: true, sort:"string"},
         {id: "musicStyle", header: ["Music style", {content:"textFilter"}], fillspace: true, sort:"string"},
         {id: "composition", header: ["Compositions", {content:"textFilter"}], fillspace: true, sort:"string"},
-        {id: "groupCreationDate", header: ["Group creation date", {content:"textFilter"}], fillspace: true, sort:"date"},
+        {id: "groupCreationDate", header: ["Group creation date", {content:"textFilter"}], fillspace: true, sort:"date", format:webix.Date.dateToStr("%d-%m-%Y")},
         {id: "countryOfFoundation", header: ["Country of foundation", {content:"textFilter"}], fillspace: true, sort:"string"}
     ],
     url:"http://localhost:3000/maindata",

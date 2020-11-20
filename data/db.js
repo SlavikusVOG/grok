@@ -116,22 +116,92 @@ module.exports = {
         //#region generate data
 
         const zeroPad = (num, places) => String(num).padStart(places, '0')
+        //todo create classes for data
+        /*class Group{
+            constructor(id,
+                        groupname,
+                        musicStyle,
+                        composition,
+                        groupCreationDate,
+                        countryOfFoundation,
+                        artists,
+                        albums){
+                this.id = id;
+                this.groupname = groupname;
+                this.musicStyle = musicStyle;
+                this.composition = composition;
+                this.groupCreationDate = groupCreationDate;
+                this.countryOfFoundation = countryOfFoundation;
+                this.artists = artists;
+                this.albums = albums;
+                //this.artists = this.#createArtists(id);
+                //this.albums = this.#createAlbums(id);
+            }
+        }
 
-        let createArtistsArray = function(groupId){
+        class Artist{
+            constructor(id,
+                        groupId,
+                        roleInTheGroup,
+                        groupMemberName,
+                        dateOfBirth,
+                        countryOfBirth,
+                        awards){
+                this.id = id;
+                this.groupId = groupId;
+                this.groupMemberName = groupMemberName;
+                this.dateOfBirth = dateOfBirth;
+                this.countryOfBirth = countryOfBirth;
+                this.awards = awards;
+            }
+        }
+
+        class Album{
+            constructor(id,
+                        groupId,
+                        album,
+                        release_date,
+                        songs,
+                        number_of_songs,
+                        number_of_issued_copies,
+                        removal_basket,
+                        img_src){
+                this.id = id;
+                this.groupId = groupId;
+                this.album = album;
+                this.release_date = release_date;
+                this.songs = songs;
+                this.number_of_songs = number_of_songs;
+                this.number_of_issued_copies = number_of_issued_copies;
+                this.removal_basket = removal_basket;
+                this.img_src = img_src;
+            }
+        }
+
+        class Song{
+            constructor(id,
+                        song_name,
+                        albumId){
+                this.id = id;
+                this.song_name = song_name;
+                this.albumId = albumId;
+            }
+        }*/
+
+        let createArtists = function (groupId) {
             let artists = new Array();
-            for(let artistIndex = 0; artistIndex <= grok_random.getRandomInt(10); artistIndex++){
+            for (let artistIndex = 0; artistIndex <= grok_random.getRandomInt(10); artistIndex++) {
                 artists[artistIndex] = new Object();
                 artists[artistIndex].id = artistIndex;
                 artists[artistIndex].groupId = groupId;
                 artists[artistIndex].roleInTheGroup = `Role${artistIndex}`;
                 artists[artistIndex].groupMemberName = `Artist${groupId}_${artistIndex}`;
-                artists[artistIndex].dateOfBirth = createDate();
+                artists[artistIndex].dateOfBirth = new Date().toUTCString();
                 artists[artistIndex].countryOfBirth = `Country${artistIndex}`;
                 artists[artistIndex].awards = `Awards${artistIndex}`
             }
             return artists;
-        }
-
+        };
         let createSongs = function(albumId){
             let songs = new Array();
             for(let songIndex = 0; songIndex < grok_random.getRandomInt(30); songIndex++){
@@ -150,19 +220,19 @@ module.exports = {
                 albums[albumIndex].id = albumIndex;
                 albums[albumIndex].groupId = groupIndex;
                 albums[albumIndex].album = `Album${groupIndex}_${albumIndex}`
-                albums[albumIndex].release_date = createDate();
+                albums[albumIndex].release_date = new Date().toUTCString();
                 albums[albumIndex].songs = createSongs(albumIndex);
                 albums[albumIndex].number_of_songs = albums[albumIndex].songs.length;
                 albums[albumIndex].number_of_issued_copies = grok_random.getRandomArbitrary(1000, 10000000);
                 albums[albumIndex].removal_backet = grok_random.getRandomInt(10);
-                albums[albumIndex].ims_src = `imgs/img${zeroPad(albumIndex, 4)}`;
+                albums[albumIndex].img_src_src = `imgs/img${zeroPad(albumIndex, 4)}`;
             }
             return albums;
         }
 
         let createDate = function(){
-            let date = new Date(1970, 1,1);
-            date.setHours(0, 0, 0, 0);
+            let date = new Date();
+            //date.setHours(0, 0, 0, 0);
             return date;
         }
 
@@ -173,9 +243,9 @@ module.exports = {
             groupsData[groupIndex].groupName = `group${groupIndex}`;
             groupsData[groupIndex].musicStyle = `style${groupIndex}`;
             groupsData[groupIndex].composition = `compositions${groupIndex}`;
-            groupsData[groupIndex].groupCreationDate = createDate();
+            groupsData[groupIndex].groupCreationDate = new Date().toUTCString();
             groupsData[groupIndex].countryOfFoundation = `Country${groupIndex}`;
-            groupsData[groupIndex].artists = createArtistsArray(groupIndex);
+            groupsData[groupIndex].artists = createArtists(groupIndex);
             groupsData[groupIndex].albums = createAlbums(groupIndex);
         }
 
