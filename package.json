@@ -1,14 +1,16 @@
 {
   "name": "grok_v2",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "This is my project",
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "devserver": "webpack-dev-server --debug --hot --devtool eval-source-map --output-pathinfo --watch --colors --inline --content-base public --port 8090 --host 0.0.0.0",
     "build": "webpack"
+
   },
   "keywords": [],
-  "author": "",
+  "author": "Viachaslau Alisheuka <slavaolish@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
@@ -19,7 +21,8 @@
   },
   "devDependencies": {
     "cors": "^2.8.5",
-    "webpack": "^5.1.0",
-    "webpack-cli": "^4.0.0"
+    "webpack": "^4.44.2",
+    "webpack-cli": "^4.0.0",
+    "webpack-dev-server": "^3.11.0"
   }
 }
