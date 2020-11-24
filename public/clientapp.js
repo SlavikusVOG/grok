@@ -8,6 +8,7 @@ let clientapp = function(){
         }).show();
         $$("list_of_records").sync($$("datasetA_datatable"));
         $$("settings_view_datatable").sync($$("datasetA_datatable"));
+        //$$("editdata_form").bind($$("datasetA_datatable"));
     });
 }
 

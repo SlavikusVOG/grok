@@ -1,4 +1,13 @@
-let DatasetA = {};
+let DatasetA = {
+    //todo: editdata_form has problem with uniq objects.
+    setDatasetA: function (){
+        let updatedData = $$("editdata_form").getValues();
+        $$("datasetA_datatable").updateItem(updatedData.id, updatedData);
+        if(DatasetA.popup){
+            DatasetA.popup.destructor();
+        }
+    }
+};
 
 //editdata_form - form for editing data from datasetA_datatable
 DatasetA.editdata_form = {
@@ -10,7 +19,7 @@ DatasetA.editdata_form = {
         {view:"text", label:'Compositions', name:"composition"},
         {view:"text", label:'Group creation date', name:"groupCreationDate", editor:"date"},
         {view:"text", label:'Country of foundation', name:"countryOfFoundation"},
-        {id:"save_editdata", view:"button", label:"Save", click:DatasetA.setDatasetA}
+        {id:"datasetA_save_editdata", view:"button", label:"Save", click:DatasetA.setDatasetA}
     ],
     fillspace:true,
     on:{
@@ -21,10 +30,10 @@ DatasetA.editdata_form = {
 
 //popup - display editdata_form with data which user select on datasetA_datatable
 DatasetA.popup = {
-    view:"popup",
-    id:"datasetA_popup",
-    head:false,
-    body:webix.copy(DatasetA.editdata_form)
+        view:"popup",
+        id:"datasetA_popup",
+        head:false,
+        body:webix.copy(DatasetA.editdata_form)
 };
 
 //datasetA_datatable - display dataset with information about groups
@@ -40,7 +49,7 @@ DatasetA.datatable = {
         {id: "groupCreationDate", header: ["Group creation date", {content:"textFilter"}], fillspace: true, sort:"date", format:webix.Date.dateToStr("%d-%m-%Y")},
         {id: "countryOfFoundation", header: ["Country of foundation", {content:"textFilter"}], fillspace: true, sort:"string"}
     ],
-    url:"http://localhost:3000/maindata",
+    url:"http://localhost:3000/groups",
     scheme:{
         $init:function(obj){
             let indexOfT = obj.groupCreationDate.indexOf('T');
@@ -54,17 +63,16 @@ DatasetA.datatable = {
         //after select row display form with data for edit
         onAfterSelect: function (selection, preserve) {
 
-            /*
-            let updatedata = $$("datasetA_datatable").getItem(selection.id);
-            $$("editdata_form").setValues(updatedata);
-            datasetA_popup.show();
+            //let updatedata = $$("datasetA_datatable").getItem(selection.id);
+            //$$("editdata_form").setValues(updatedata);
+            //DatasetA.popup.show();
 
-             */
+            webix.ui(DatasetA.popup).show();
             $$("editdata_form").bind($$("datasetA_datatable"));
-            DatasetA.popup.show();
         }
     },
-    save:"rest->http://localhost:3000/maindata"
+
+    save:"rest->http://localhost:3000/groups"
 }
 
 DatasetA.toolbar = {
@@ -99,9 +107,3 @@ DatasetA.view={
         ,DatasetA.datatable
     ]
 };
-
-DatasetA.setDatasetA = function (){
-    let updatedData = $$("editdata_form").getValues();
-    $$("datasetA_datatable").updateItem(updatedData.id, updatedData);
-    $$("datasetA_popup").hide();
-}
