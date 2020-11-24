@@ -188,6 +188,13 @@ module.exports = {
             }
         }*/
 
+
+        let createDate = function(){
+            let date = new Date();
+            //date.setHours(0, 0, 0, 0);
+            return date;
+        }
+
         let createArtists = function (groupId) {
             let artists = new Array();
             for (let artistIndex = 0; artistIndex <= grok_random.getRandomInt(10); artistIndex++) {
@@ -196,7 +203,7 @@ module.exports = {
                 artists[artistIndex].groupId = groupId;
                 artists[artistIndex].roleInTheGroup = `Role${artistIndex}`;
                 artists[artistIndex].groupMemberName = `Artist${groupId}_${artistIndex}`;
-                artists[artistIndex].dateOfBirth = new Date().toUTCString();
+                artists[artistIndex].dateOfBirth = createDate();
                 artists[artistIndex].countryOfBirth = `Country${artistIndex}`;
                 artists[artistIndex].awards = `Awards${artistIndex}`
             }
@@ -220,7 +227,7 @@ module.exports = {
                 albums[albumIndex].id = albumIndex;
                 albums[albumIndex].groupId = groupIndex;
                 albums[albumIndex].album = `Album${groupIndex}_${albumIndex}`
-                albums[albumIndex].release_date = new Date().toUTCString();
+                albums[albumIndex].release_date = createDate();
                 albums[albumIndex].songs = createSongs(albumIndex);
                 albums[albumIndex].number_of_songs = albums[albumIndex].songs.length;
                 albums[albumIndex].number_of_issued_copies = grok_random.getRandomArbitrary(1000, 10000000);
@@ -230,11 +237,6 @@ module.exports = {
             return albums;
         }
 
-        let createDate = function(){
-            let date = new Date();
-            //date.setHours(0, 0, 0, 0);
-            return date;
-        }
 
         let groupsData = new Array();
         for(let groupIndex = 0; groupIndex < 10; groupIndex++){
@@ -243,7 +245,7 @@ module.exports = {
             groupsData[groupIndex].groupName = `group${groupIndex}`;
             groupsData[groupIndex].musicStyle = `style${groupIndex}`;
             groupsData[groupIndex].composition = `compositions${groupIndex}`;
-            groupsData[groupIndex].groupCreationDate = new Date().toUTCString();
+            groupsData[groupIndex].groupCreationDate = createDate();
             groupsData[groupIndex].countryOfFoundation = `Country${groupIndex}`;
             groupsData[groupIndex].artists = createArtists(groupIndex);
             groupsData[groupIndex].albums = createAlbums(groupIndex);
