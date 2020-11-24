@@ -41,6 +41,14 @@ DatasetA.datatable = {
         {id: "countryOfFoundation", header: ["Country of foundation", {content:"textFilter"}], fillspace: true, sort:"string"}
     ],
     url:"http://localhost:3000/maindata",
+    scheme:{
+        $init:function(obj){
+            let indexOfT = obj.groupCreationDate.indexOf('T');
+            obj.groupCreationDate = obj.groupCreationDate.slice(0,indexOfT);
+            //obj.groupCreationDate = webix.i18n.parseFormatDate(obj.groupCreationDate);
+            //alert(obj.groupCreationDate);
+        }
+    },
 
     on: {
         //after select row display form with data for edit
