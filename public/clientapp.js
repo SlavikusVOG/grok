@@ -1,3 +1,13 @@
+//TODO: Require change to import
+
+require('./menu_data');
+require('./datasetA');
+require('./datasetB');
+require('./listOfRecords');
+require('./settings');
+require('./menu');
+require('./multiView');
+
 let clientapp = function(){
     webix.ready(function (){
         webix.ui({
