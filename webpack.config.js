@@ -8,20 +8,40 @@ module.exports = {
     },
 };*/
 
-let webpack = require('webpack');
+const { resolve } = require('path');
+
+const js_resource   = './src/',
+    webpack = require('webpack'),
+    path = require('path'),
+    publicPath = '/dist';
 
 module.exports = {
-    entry: "./src/serverapp.js",
-    output:{
-        path: __dirname + '/dist',
-        publicPath: "dist/",
-        filename: "serverapp.js"
+    mode: 'development',
+    entry: {
+        clientapp: '/public/clientapp.js'
+        // datasetA: '/public/datasetA.js',
+        // datasetB: '/public/datasetB.js',
+        // listOfRecords: '/public/listOfRecords.js',
+        // menu_data: '/public/menu_data.js',
+        // menu: '/public/menu.js',
+        // multiView: '/public/multiView.js',
+        // settings: '/public/settings.js'
     },
-    module:{
-        loaders:[
-            {
-                
-            }
-        ]
+        
+    output:{
+        filename: '[name].bundle.js',
+        path: __dirname + '/dist/public'
+    }
+}/*,
+{
+    mode: 'development',
+    entry: {
+        serverapp: '/src/serverapp.js'
+    },
+        
+    output:{
+        filename: '[name].bundle.js',
+        path: __dirname + '/dist/source'
     }
 }
+]*/
